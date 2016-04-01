@@ -13,7 +13,7 @@ class Index extends CI_Controller {
 	public function index(){
 	    //$this->output->cache(1);               //开启缓存,其中 $n 是缓存更新的时间（单位分钟）。
 	    //$this->output->delete_cache();           //删除缓存
-	    
+
 	    
 		$data['title'] = 'ckckckckckckck123456789';
 		$this->load->view('templates/header',$data);
@@ -98,4 +98,37 @@ class Index extends CI_Controller {
 	        $this->create();
 	    }
 	}*/
+
+
+	//同一个IP在30s内,不超过2次记录时的写入信息
+	function writefile(){
+		header("Content-Type:text/html;   charset=utf-8");
+
+		$num =2 ;		//最多写入3次
+		$timeout = 30;	//规定时间内
+		$ip = $_SERVER['REMOTE_ADDR'];
+	    $file =dirname( dirname(__FILE__) ).'\\public\\'.$ip.'.txt';
+	    if(!file_exists($file)){
+	        $array['num'] =1;
+	        $array['time']=time();
+	        $data = json_encode($array);
+
+	        //var_dump($file);
+	        $myfile = fopen($file, "a");
+	        fwrite( $myfile,$data);
+	        fclose($myfile);
+	    }else{
+	        $data =  file_get_contents($file);
+	        $datas = json_decode($data,true);
+	        //var_dump($datas);
+	        if( ( $datas['num'] != $num ) && ( time()- $datas['time'] < $timeout) ){
+	        	$array['num'] =$datas['num'] + 1;
+	        	$array['time']=time();
+	        	$data = json_encode($array);
+	            file_put_contents($file, $data);
+	        }else{
+	            exit('同一个IP在'.$timeout.'s内,已超过'.$num.'次'); 
+	        }
+	    }
+	}
 }
