@@ -51,6 +51,16 @@ class Index extends CI_Controller {
 	    $this->load->view('templates/header', $data);
 	    $this->load->view('Index/test', $data);
 	    $this->load->view('templates/footer');
+
+	    if ($this->input->get_post('debug') == '1') {		//	http://localhost/CodeIgniter-3.0.6/index.php/Index/test?debug=1  查看当前执行的sql语句
+            print_R($this->db->last_query());
+            exit;
+        }
+
+        if ($this->input->get_post('debug') == '2') {		//	http://localhost/CodeIgniter-3.0.6/index.php/Index/test?debug=2   查看等前的结果集
+            print_R($data['news']);
+            exit;
+        }
 	    
 	}
 	//读取单条数据
@@ -65,6 +75,7 @@ class Index extends CI_Controller {
 	    $this->load->view('Index/test2', $data);
 	    $this->load->view('templates/footer');
 	}
+
 
 	//数据库插入数据
 	public function create(){
