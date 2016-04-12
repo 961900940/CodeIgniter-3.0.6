@@ -62,7 +62,12 @@ class Index extends CI_Controller {
             exit;
         }
 	    
+	    $this->config->load('common',TRUE);						//加载自己的配置config文件
+	    $author = $this->config->item('author','common');
+	    var_dump($author);exit;
 	}
+
+
 	//读取单条数据
 	public function test2($slug = NULL){
 		$data['news'] = $this->Onethink_action->get_actions($slug);
@@ -116,7 +121,7 @@ class Index extends CI_Controller {
 		header("Content-Type:text/html;   charset=utf-8");
 
 		$num =2 ;		//最多写入3次
-		$timeout = 30;	//规定时间内
+		$timeout = 5;	//规定时间内
 		$ip = $_SERVER['REMOTE_ADDR'];
 	    $file =dirname( dirname(__FILE__) ).'\\public\\'.$ip.'.txt';
 	    if(!file_exists($file)){
@@ -132,14 +137,17 @@ class Index extends CI_Controller {
 	        $data =  file_get_contents($file);
 	        $datas = json_decode($data,true);
 	        //var_dump($datas);
-	        if( ( $datas['num'] != $num ) && ( time()- $datas['time'] < $timeout) ){
+	        if( ( $datas['num'] != $num ) && ( time()- $datas['time'] < $timeout) ){	//过期时间内,可写
 	        	$array['num'] =$datas['num'] + 1;
-	        	$array['time']=time();
-	        	$data = json_encode($array);
-	            file_put_contents($file, $data);
+	        }elseif(time()- $datas['time'] >= $timeout){								//过期重置
+	        	$array['num'] = 1;
 	        }else{
 	            exit('同一个IP在'.$timeout.'s内,已超过'.$num.'次'); 
 	        }
+
+	        $array['time']=time();
+        	$data = json_encode($array);
+            file_put_contents($file, $data);
 	    }
 	}
 }
