@@ -150,4 +150,33 @@ class Index extends CI_Controller {
             file_put_contents($file, $data);
 	    }
 	}
+
+
+	//转义查询、查询绑定
+	public function parameterband(){
+	    //转义查询
+/* 		$id = $this->input->get_post('id',TRUE);
+	    $sql ="select * from onethink_channel where id =".$this->db->escape($id) ;
+		$res = $this->db->query($sql);
+		var_dump($this->db->last_query());
+        var_dump($res->result_array()); */
+		
+		
+/* 		$id = $this->input->get_post('id',TRUE);
+	    $sql ="select * from onethink_channel where id ='".$this->db->escape_str($id)."' " ;
+		$res = $this->db->query($sql);
+		var_dump($this->db->last_query());
+        var_dump($res->row()); */
+	    
+		//查询绑定
+/* 		$sql ='select * from onethink_channel where id = ? ';
+        $res = $this->db->query($sql,array($this->input->get_post('id',TRUE)));
+		var_dump($this->db->last_query());
+        var_dump($res->result_array()); */
+
+	    $sql = "update onethink_channel set title = ? , create_time = ? where id = ?";
+	    $res = $this->db->query($sql,array($this->input->get_post('title',TRUE),time(),$this->input->get_post('id',TRUE)));
+	    var_dump($this->db->last_query());
+	    var_dump($res);
+	}
 }

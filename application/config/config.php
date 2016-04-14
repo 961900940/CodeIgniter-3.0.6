@@ -422,7 +422,8 @@ $config['standardize_newlines'] = FALSE;
 |          for backwards compatibility purposes!
 |
 */
-$config['global_xss_filtering'] = FALSE;
+//$config['global_xss_filtering'] = TRUE;		//输入类可以自动的对输入数据进行过滤，来阻止跨站脚本攻击。每次遇到 POST 或 COOKIE 数据时自动运行过滤 
+$config['global_xss_filtering'] = FALSE;		
 
 /*
 |--------------------------------------------------------------------------
