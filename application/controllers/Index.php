@@ -203,14 +203,9 @@ class Index extends CI_Controller {
 	    $res  = $this->db->insert('channel', $data);       //$this->db->insert(),  数据插入到数据库
 	    var_dump($this->db->last_query());
 	    var_dump($res); */
+	    
 
-	    /* $title = $this->input->get_post('title',TRUE);
-	    $sql = "INSERT INTO onethink_channel (title) VALUES('".mysqli_real_escape_string($title)."')";
-	    $res = $this->db->query($sql);
-	    var_dump($this->db->last_query());
-	    var_dump($res); */
-	    
-	    
+	   
 	    
 		//2、查询绑定
         /*$sql ='select * from onethink_channel where id = ? ';
@@ -222,8 +217,6 @@ class Index extends CI_Controller {
 	    $res = $this->db->query($sql,array($this->input->get_post('title',TRUE),time(),$this->input->get_post('id',TRUE)));
 	    var_dump($this->db->last_query());
 	    var_dump($res); */
-	    
-	    
 	    
 	    //3、 连贯操作
 	    /* $res = $this->db->select('*')
