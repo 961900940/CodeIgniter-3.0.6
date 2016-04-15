@@ -154,29 +154,86 @@ class Index extends CI_Controller {
 
 	//转义查询、查询绑定
 	public function parameterband(){
-	    //转义查询
-/* 		$id = $this->input->get_post('id',TRUE);
+	    //1、转义查询
+        //******************select*********************
+	    //$this->db->escape() 这个函数会检测数据类型，仅转义字符串类型的数据。 它会自动用单引号将你的数据括起来，你不用手动添加
+        /*$id = $this->input->get_post('id',TRUE);
 	    $sql ="select * from onethink_channel where id =".$this->db->escape($id) ;
 		$res = $this->db->query($sql);
 		var_dump($this->db->last_query());
         var_dump($res->result_array()); */
 		
-		
-/* 		$id = $this->input->get_post('id',TRUE);
+	    //$this->db->escape_str() 这个函数忽略数据类型，对传入的数据进行转义， 这个方法并不常用，一般情况都是使用上面的那个方法
+        /*$id = $this->input->get_post('id',TRUE);
 	    $sql ="select * from onethink_channel where id ='".$this->db->escape_str($id)."' " ;
 		$res = $this->db->query($sql);
 		var_dump($this->db->last_query());
         var_dump($res->row()); */
 	    
-		//查询绑定
-/* 		$sql ='select * from onethink_channel where id = ? ';
+	    //用于处理 LIKE 语句中的字符串，  LIKE 通配符（'%', '_'）可以被正确的转义。
+	    /* $title=$this->input->get_post('title',TRUE);
+	    $sql = "SELECT * FROM onethink_channel WHERE title LIKE '%" .$this->db->escape_like_str($title)."%'";
+	    $res = $this->db->query($sql);
+	    var_dump($this->db->last_query());
+	    var_dump($res->result_array()); */
+	    
+	    
+	    //***************insert***********************
+	    /* $title = $this->input->get_post('title',TRUE);
+	    $sql = "INSERT INTO onethink_channel (title) VALUES(".$this->db->escape($title).")";
+	    $res = $this->db->query($sql);
+	    var_dump($this->db->last_query());
+	    var_dump($res); */
+	    
+	    /* $title = $this->input->get_post('title',TRUE);
+	    $sql = "INSERT INTO onethink_channel (title) VALUES('".$this->db->escape_str($title)."')";
+	    $res = $this->db->query($sql);
+	    var_dump($this->db->last_query());
+	    var_dump($res); */
+	    
+	    /* $time =time();
+	    $data = array('title' => $this->input->get_post('title',true),'create_time'=>$time); 
+	    $sql  = $this->db->insert_string('channel', $data);       //$this->db->insert_string(),所有的值自动被转义，生成安全的查询语句
+	    $res = $this->db->query($sql);
+	    var_dump($this->db->last_query());
+	    var_dump($res); */
+	    
+	    /* $time =time();
+	    $data = array('title' => $this->input->get_post('title',true),'create_time'=>$time);
+	    $res  = $this->db->insert('channel', $data);       //$this->db->insert(),  数据插入到数据库
+	    var_dump($this->db->last_query());
+	    var_dump($res); */
+
+	    /* $title = $this->input->get_post('title',TRUE);
+	    $sql = "INSERT INTO onethink_channel (title) VALUES('".mysqli_real_escape_string($title)."')";
+	    $res = $this->db->query($sql);
+	    var_dump($this->db->last_query());
+	    var_dump($res); */
+	    
+	    
+	    
+		//2、查询绑定
+        /*$sql ='select * from onethink_channel where id = ? ';
         $res = $this->db->query($sql,array($this->input->get_post('id',TRUE)));
 		var_dump($this->db->last_query());
         var_dump($res->result_array()); */
 
-	    $sql = "update onethink_channel set title = ? , create_time = ? where id = ?";
+	    /* $sql = "update onethink_channel set title = ? , create_time = ? where id = ?";
 	    $res = $this->db->query($sql,array($this->input->get_post('title',TRUE),time(),$this->input->get_post('id',TRUE)));
 	    var_dump($this->db->last_query());
-	    var_dump($res);
+	    var_dump($res); */
+	    
+	    
+	    
+	    //3、 连贯操作
+	    /* $res = $this->db->select('*')
+	                ->from('channel')
+                    ->where('id >= 3 and update_time != 0') //注意id 后边有空格
+	                ->limit(3,2)   //和正常的limit参数相反的
+	                ->order_by('id desc')
+                    ->get();
+	    var_dump($res->result_array());
+	    var_dump($this->db->last_query()); */
+
 	}
 }
