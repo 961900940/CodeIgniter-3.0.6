@@ -205,7 +205,8 @@ class Index extends CI_Controller {
 	    var_dump($res); */
 	    
 
-	   
+	    
+	    
 	    
 		//2、查询绑定
         /*$sql ='select * from onethink_channel where id = ? ';
@@ -218,6 +219,8 @@ class Index extends CI_Controller {
 	    var_dump($this->db->last_query());
 	    var_dump($res); */
 	    
+	    
+	    
 	    //3、 连贯操作
 	    /* $res = $this->db->select('*')
 	                ->from('channel')
@@ -227,6 +230,12 @@ class Index extends CI_Controller {
                     ->get();
 	    var_dump($res->result_array());
 	    var_dump($this->db->last_query()); */
-
+	    
+	    $this->db->select('*');
+	    $this->db->from('channel');
+	    $this->db->join('auth_group', 'channel.id = auth_group.id');
+	    $query = $this->db->get();
+	    var_dump( $query->result());
+	    var_dump($this->db->last_query());
 	}
 }
