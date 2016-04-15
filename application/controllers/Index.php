@@ -6,7 +6,7 @@ class Index extends CI_Controller {
 	public function __construct(){
        parent::__construct();
        $this->load->model('Onethink_action');
-       $this->load->helper('url_helper');			//视图页面  site_url('news/'.$news_item['slug']);
+       $this->load->helper('url');			//视图页面  site_url('news/'.$news_item['slug']);
        $this->load->database();
     }
 
@@ -16,8 +16,10 @@ class Index extends CI_Controller {
 
 	    
 		$data['title'] = 'ckckckckckckck123456789';
-		$this->load->view('templates/header',$data);
-		$this->load->view('templates/footer');
+		//$this->load->view('templates/header',$data);
+		$this->load->view('Index/index');
+		//$this->load->view('templates/footer');
+		
 		
 		//1、原生sql
 		$query = $this->db->query('select * from onethink_action');
@@ -42,6 +44,14 @@ class Index extends CI_Controller {
 
 	}
 
+	public function index2(){
+	    $username =  $this->input->post_get('username',TRUE);
+	    $age = $this->input->post_get('age',TRUE);
+	    $xdata['status'] ='success';
+	    $xdata['data'] = 1;
+	    echo json_encode($xdata);exit;
+	}
+	
 	//读取数据(数组)
 	public function test(){
 		$data['news'] = $this->Onethink_action->get_actions();
@@ -204,9 +214,12 @@ class Index extends CI_Controller {
 	    var_dump($this->db->last_query());
 	    var_dump($res); */
 	    
-
 	    
-	    
+// 	    $title = $this->input->get_post('title',TRUE);
+// 	    $sql = "INSERT INTO onethink_channel (title) VALUES('".mysqli_real_escape_string($title)."')";
+// 	    $res = $this->db->query($sql);
+// 	    var_dump($this->db->last_query());
+// 	    var_dump($res);
 	    
 		//2、查询绑定
         /*$sql ='select * from onethink_channel where id = ? ';
