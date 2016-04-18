@@ -5,8 +5,7 @@
 	<title>Document</title>
 	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
-<body>
-<?php echo "<pre>";var_dump($_SERVER);?>
+<body>	
 	<input type="text" id="username" name="username" value=""/><br>
 	<input type="text" id="age" name="age" value=""/><br>
 	<input type="button" class="button" value="提交">

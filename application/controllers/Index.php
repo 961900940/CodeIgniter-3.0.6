@@ -14,7 +14,6 @@ class Index extends CI_Controller {
 	    //$this->output->cache(1);               //开启缓存,其中 $n 是缓存更新的时间（单位分钟）。
 	    //$this->output->delete_cache();           //删除缓存
 
-	    
 		$data['title'] = 'ckckckckckckck123456789';
 		//$this->load->view('templates/header',$data);
 		$this->load->view('Index/index');
