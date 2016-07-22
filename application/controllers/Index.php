@@ -250,4 +250,24 @@ class Index extends CI_Controller {
 	    var_dump( $query->result());
 	    var_dump($this->db->last_query());
 	}
+
+	
+	//测试记录日志
+	public function ck(){
+		$this->writeLog('1111111111');
+	}
+	
+	public function ck2(){	//需开启CodeIgniter-3.0.6\application\config\config.php  对应$config['log_threshold'] = 0;对应级别值
+		log_message('debug', 'Some variable was correctly set');
+	}
+	/**
+     * log 记录运行日志
+     * @param string $msg  记录的日志消息
+    */
+    function writeLog($msg){
+        $time       = time();
+        $msg        = date("Y-m-d H:i:s",$time)." : ".$msg."\r\n";
+        $msgPath    = './application/logs/'.date("Y-m-d",$time).'.txt';
+        file_put_contents($msgPath,$msg,FILE_APPEND);
+    }
 }
