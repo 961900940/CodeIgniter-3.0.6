@@ -270,4 +270,16 @@ class Index extends CI_Controller {
         $msgPath    = './application/logs/'.date("Y-m-d",$time).'.txt';
         file_put_contents($msgPath,$msg,FILE_APPEND);
     }
+	
+	/**
+	* 封装自定义函数，helper的使用
+	* 目录添加响应文件 ：application/helpers/function_helper.php
+	* 加载
+	* 调用
+	**/
+	public function define_func(){
+		$this->load->helper('functions');
+		dump(array('status'=>'1','info'=>'成功~~~'));
+		writeLog('openApi',json_encode(array('status'=>'1','info'=>'成功~~~')));
+	}
 }
